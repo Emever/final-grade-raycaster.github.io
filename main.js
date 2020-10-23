@@ -12,7 +12,7 @@
 
 // global variables
 var objMap = new Map();
-objMap.init();
+//objMap.init();
 var objPlayer = new Player(160,160,0);
 
 

@@ -20,7 +20,7 @@
 */
 
 const FOV = degreesToRadians(75); //recomendado numero impar
-const FOV_NUM_RAYS = 30;
+const FOV_NUM_RAYS = 100;
 const FOV_ANGLE_SPACING = FOV / (FOV_NUM_RAYS - 1);
 
 class Ray {
@@ -33,20 +33,56 @@ class Ray {
         this.distance = 100;  // distancia recorrida por el rayo
     }
 
+    cast() {
+        let yWallhitResult = this.checkYWallhit();
+        this.dX = yWallhitResult[0];
+        this.dY = yWallhitResult[1];
+        let xWallhitResult = this.checkXWallhit();
+
+
+    }
+
+    checkXWallhit() {}
+
+    checkYWallhit() {
+        // esta funcion detecta las colisiones del rayo a medida que su Y evoluciona (sube/baja de fila en la grid)
+        // la primera distancia depende de la posición del jugador en la grid
+        let rayGoesUp = (Math.sin(this.direction) < 0)? true : false;       // TRUE si el rayo va hacia arriba, FALSE si va hacia abajo
+        let rayGoesRight = (Math.cos(this.direction) < 0)? false : true;    // TRUE hacia la derecha, FALSE si va hacia la izquierda
+
+        // los 'steps' es la distancia que se repetira en cada eje (x e y) hasta encontrar un muro
+        let yStep = TILE_SIZE;  // verticalmente, siempre encontrara la siguiente coordenada de la grid a TILE_SIZE px de distancia
+        let xStep = yStep / Math.tan(this.direction);
+        let yInit = Math.floor(objPlayer.y/TILE_SIZE) * TILE_SIZE - objPlayer.y;
+        yInit += (rayGoesUp)? 0 : TILE_SIZE;
+        let xInit = yInit / Math.tan(this.direction);
+        let yDist = yInit;
+        let xDist = xInit;
+
+        // repetir hasta encontrar un muro
+        let sign = (rayGoesUp)? -1:1;
+        while (!objMap.hasWallAt(objPlayer.x + xDist, objPlayer.y + yDist - ((rayGoesUp)? TILE_SIZE:0), objPlayer.level)) {
+            xDist += xStep * sign;
+            yDist += yStep * sign;
+        }
+
+        return [xDist, yDist];
+    }
+
     render() {
         stroke('rgba(0,200,255,0.3)');
         strokeWeight(1);
         line(objPlayer.x,
             objPlayer.y,
-            objPlayer.x + MAP_SCALING * (this.distance * Math.cos(this.direction)),
-            objPlayer.y + MAP_SCALING * (this.distance * Math.sin(this.direction)),
+            objPlayer.x + MAP_SCALING * this.dX,
+            objPlayer.y + MAP_SCALING * this.dY
         );
     }
 }
 
 class FieldOfView {
     constructor() {
-        this.angleView = -Math.PI/2;
+        this.angleView = Math.PI/2;
         this.fovSpeed = 2 * Math.PI / 180;
         this.turnDirection = 0; // -1 == left, 1 == right
 
@@ -65,7 +101,9 @@ class FieldOfView {
 
         let rayAngle = this.angleView - FOV/2;
         for (let iRay = 0; iRay < FOV_NUM_RAYS; iRay++) {
-            this.rays.push(new Ray(this.oX, this.oY, rayAngle));
+            let auxRay = new Ray(this.oX, this.oY, normalizeAngle(rayAngle));
+            auxRay.cast();
+            this.rays.push(auxRay);
             rayAngle += FOV_ANGLE_SPACING;
         }
     }

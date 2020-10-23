@@ -45,7 +45,7 @@ class Map {
         // array con las tiles de clase "muro" ("wall")
         this.walls = [];
 
-        //init();
+        this.init();
     }
 
     loadTileset() {
@@ -84,6 +84,11 @@ class Map {
     }
     hasWallAtY(dx, dy, dlevel) {
         if (dy < 0 || dy > this.height * TILE_SIZE) return true;
+        //calculamos la tile de la grid donde se encontrara el jugador
+        return (this.grid[dlevel][Math.floor(dy/TILE_SIZE)][Math.floor(dx/TILE_SIZE)]);
+    }
+    hasWallAt(dx, dy, dlevel) {
+        if ((dy < 0 || dy > this.height * TILE_SIZE) || (dx < 0 || dx > this.width * TILE_SIZE)) return true;
         //calculamos la tile de la grid donde se encontrara el jugador
         return (this.grid[dlevel][Math.floor(dy/TILE_SIZE)][Math.floor(dx/TILE_SIZE)]);
     }
@@ -134,8 +139,9 @@ class Tile {
 
     render() {
         // pinta el muro de un color y none transparente
-        stroke('#222222');
-        strokeWeight(2);
+        //stroke('#222222');
+        stroke('rgba(255,255,255,0.1)');
+        strokeWeight(1);
         if(this.class == "wall") fill(200,200,200);
         else if(this.class == "none") fill(200,200,200, 0);
         rect(
