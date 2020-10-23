@@ -6,9 +6,9 @@
         - gestionar las teclas pulsadas y actualizar los bools del player acorde
     
     goals:
-        o movimiento del jugador    [x]
-        o controlar fov del jugador [x]
-        o fishbowl effect del fov   [x]
+        o movimiento del jugador (input)    [x]
+        o controlar fov del jugador (input) [x]
+        o fishbowl effect del fov (input)   [x]
     
     estado:
         > terminado (por ahora no mas controles a anadir)
@@ -26,7 +26,7 @@ const KeyShift = 16;
 
 function keyPressed() {
     let updateRate = 1;
-    
+
     /*
     if (keyIsDown(KeyShift)) {
         console.log("Key is down");

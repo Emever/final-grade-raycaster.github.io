@@ -13,7 +13,7 @@
 // global variables
 var objMap = new Map();
 objMap.init();
-var objPlayer = new Player();
+var objPlayer = new Player(160,160,0);
 
 
 function setup() {
@@ -34,6 +34,6 @@ function draw() {
 
     objMap.render();
     objPlayer.render();
-    
+
     //rect(20,0,WINDOW_WIDTH,WINDOW_HEIGHT);
 }

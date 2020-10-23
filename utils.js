@@ -19,3 +19,15 @@ function levelImageToGrid(className) {
     // Get the image data
     console.log(imgData);
 }
+
+function normalizeAngle(angle) {
+    angle = angle % (2 * Math.PI);
+    if (angle < 0) {
+        angle = (2 * Math.PI) + angle; //so it stays between 0 and 2PI (max)
+    }
+    return angle;
+}
+
+function degreesToRadians(angle) {
+    return angle * Math.PI/180;
+}

@@ -76,7 +76,17 @@ class Map {
         this.loadWallset();
     }
 
-
+    // busca si las coordenadas en parametros las ocupa un muro
+    hasWallAtX(dx, dy, dlevel) {
+        if (dx < 0 || dx > this.width * TILE_SIZE) return true;
+        //calculamos la tile de la grid donde se encontrara el jugador
+        return (this.grid[dlevel][Math.floor(dy/TILE_SIZE)][Math.floor(dx/TILE_SIZE)]);
+    }
+    hasWallAtY(dx, dy, dlevel) {
+        if (dy < 0 || dy > this.height * TILE_SIZE) return true;
+        //calculamos la tile de la grid donde se encontrara el jugador
+        return (this.grid[dlevel][Math.floor(dy/TILE_SIZE)][Math.floor(dx/TILE_SIZE)]);
+    }
 
 
     //chivato del mapa
