@@ -24,29 +24,27 @@ const FOV_NUM_RAYS = 100;
 const FOV_ANGLE_SPACING = FOV / (FOV_NUM_RAYS - 1);
 
 class Ray {
-    constructor(x,y,direction) {
-        this.oX = x;    // origin x position
-        this.oY = y;    // origin y position
+    constructor(direction) {
         this.direction = direction; // angulo del rayo (rads.)
-        this.dX = x;    // destination x position
-        this.dY = y;    // destination y position
+        this.dX = 0;    // destination x position
+        this.dY = 0;    // destination y position
         this.distance = 100;  // distancia recorrida por el rayo
     }
 
     cast() {
         let yWallhitResult = this.checkYWallhit();
         let xWallhitResult = this.checkXWallhit();
-        this.dX = xWallhitResult[0];
-        this.dY = xWallhitResult[1];
-
+        if (yWallhitResult[2] < xWallhitResult[2])
+            [this.dX, this.dY, this.distance] = yWallhitResult;
+        else
+            [this.dX, this.dY, this.distance] = xWallhitResult;
+        
     }
 
     checkXWallhit() {
         // esta funcion detecta las colisiones del rayo a medida que su Y evoluciona (sube/baja de fila en la grid)
         // la primera distancia depende de la posición del jugador en la grid
         let rayGoesRight = (Math.cos(this.direction) < 0)? false : true;    // TRUE hacia la derecha, FALSE si va hacia la izquierda
-        let rayGoesUp = (Math.sin(this.direction) < 0)? true : false;       // TRUE si el rayo va hacia arriba, FALSE si va hacia abajo
-
 
         // los 'steps' es la distancia que se repetira en cada eje (x e y) hasta encontrar un muro
         let xStep = TILE_SIZE;  // verticalmente, siempre encontrara la siguiente coordenada de la grid a TILE_SIZE px de distancia
@@ -55,7 +53,6 @@ class Ray {
         let xInit = Math.floor(objPlayer.x/TILE_SIZE) * TILE_SIZE - objPlayer.x;
         xInit += (rayGoesRight)? TILE_SIZE:0;
         let yInit = xInit * Math.tan(this.direction);
-
         
         let xDist = xInit;
         let yDist = yInit;
@@ -66,7 +63,7 @@ class Ray {
             yDist += yStep;
         }
         
-        return [xDist, yDist];
+        return [xDist, yDist, getDistFromSidelength(xDist, yDist)];
     }
 
     checkYWallhit() {
@@ -90,7 +87,7 @@ class Ray {
             yDist += yStep * sign;
         }
 
-        return [xDist, yDist];
+        return [xDist, yDist, getDistFromSidelength(xDist, yDist)];
     }
 
     render() {
@@ -125,7 +122,7 @@ class FieldOfView {
 
         let rayAngle = this.angleView - FOV/2;
         for (let iRay = 0; iRay < FOV_NUM_RAYS; iRay++) {
-            let auxRay = new Ray(this.oX, this.oY, normalizeAngle(rayAngle));
+            let auxRay = new Ray(normalizeAngle(rayAngle));
             auxRay.cast();
             this.rays.push(auxRay);
             rayAngle += FOV_ANGLE_SPACING;
