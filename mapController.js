@@ -16,7 +16,7 @@
         > congelado en cargar info desde una imagen.
 */
 
-const MAP_SCALING = 1;    //factor de reescalado del mapa (utilidad como minimapa)
+const MAP_SCALING = .5;    //factor de reescalado del mapa (utilidad como minimapa)
 const TILE_SIZE = 32;   //32 pixeles cuadrados cada tile del mapa
 
 class Map {
@@ -136,7 +136,7 @@ class Map {
 
         // info sobre el nivel mostrado
         textSize(TILE_SIZE/2);
-        fill(255,255,255);
+        fill(0,200,255);
         text(
             'Level '+(objPlayer.level+1)+'/'+this.nLevels,
             MAP_SCALING * TILE_SIZE/2,

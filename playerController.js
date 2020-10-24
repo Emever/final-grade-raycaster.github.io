@@ -20,7 +20,7 @@
 */
 
 const FOV = degreesToRadians(75); //recomendado numero impar
-const FOV_NUM_RAYS = 100;
+const FOV_NUM_RAYS = 160;
 const FOV_ANGLE_SPACING = FOV / (FOV_NUM_RAYS - 1);
 
 class Ray {
@@ -28,16 +28,22 @@ class Ray {
         this.direction = direction; // angulo del rayo (rads.)
         this.dX = 0;    // destination x position
         this.dY = 0;    // destination y position
-        this.distance = 100;  // distancia recorrida por el rayo
+        this.distance = objPlayer.fov.maxDistance;  // distancia recorrida por el rayo
+        this.rayHitsVertically = false;
     }
 
     cast() {
         let yWallhitResult = this.checkYWallhit();
         let xWallhitResult = this.checkXWallhit();
-        if (yWallhitResult[2] < xWallhitResult[2])
+        if (yWallhitResult[2] < xWallhitResult[2]) {
             [this.dX, this.dY, this.distance] = yWallhitResult;
-        else
+            this.rayHitsVertically = true;
+        } else
             [this.dX, this.dY, this.distance] = xWallhitResult;
+
+        if (!objPlayer.fisheyeEffect) {
+            this.distance *= Math.cos(this.direction - objPlayer.fov.angleView);
+        }
         
     }
 
@@ -108,6 +114,8 @@ class FieldOfView {
         this.turnDirection = 0; // -1 == left, 1 == right
 
         this.rays = [];
+        this.maxDistance = Math.max(objMap.width, objMap.height) * TILE_SIZE;
+        this.maxDistance = Math.sqrt(2*this.maxDistance*this.maxDistance);   // hacemos el cuadrado y luego la raiz cuadrada (hipotenusa de pitagoras)
     }
 
     update() {
@@ -152,10 +160,10 @@ class Player {
         this.x = oX;
         this.y = oY;
         this.fov = new FieldOfView(this.x, this.y);
-        this.movSpeed = 1.5;    // el jugador avanza 1.5 px/frame
+        this.movSpeed = 2;    // el jugador avanza 1.5 px/frame
         this.walkDirection = 0; // -1 == back, 1 == front
 
-        this.fishbowlEffect = false;
+        this.fisheyeEffect = false;
     }
 
     update() {

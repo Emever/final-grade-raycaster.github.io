@@ -12,13 +12,13 @@
 
 // global variables
 var objMap = new Map();
-var objPlayer = new Player(160,160,0);
+var objPlayer = new Player(162,162,0);
 var objRender = new Render();
 
 
 function setup() {
-    //createCanvas(VIEWPORT_WIDTH, VIEWPORT_HEIGHT);
-    createCanvas(MAP_SCALING * objMap.width * TILE_SIZE, MAP_SCALING * (objMap.height + 2) * TILE_SIZE);
+    createCanvas(VIEWPORT_WIDTH, VIEWPORT_HEIGHT);
+    //createCanvas(MAP_SCALING * objMap.width * TILE_SIZE, MAP_SCALING * (objMap.height + 2) * TILE_SIZE);
 
     //objMap.consoleLogging();
     objMap.render();
@@ -26,7 +26,7 @@ function setup() {
 
 function update() {
     objPlayer.update();
-    //objRender.update();
+    objRender.update();
 }
 
 function draw() {
@@ -34,7 +34,7 @@ function draw() {
     fill("#565656");
     update();
     
-    //objRender.loadProjection();
+    objRender.loadProjection();
     objMap.render();
     objPlayer.render();
     

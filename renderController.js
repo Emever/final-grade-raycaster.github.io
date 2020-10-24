@@ -19,39 +19,51 @@ const VIEWPORT_WIDTH = 960;
 const VIEWPORT_HEIGHT = 640;
 const RENDER_VLINES_SCALING = 1;
 const RENDER_VLINES_WIDTH = VIEWPORT_WIDTH / FOV_NUM_RAYS / RENDER_VLINES_SCALING;
-const RENDER_VLINES_MIN_HEIGHT = VIEWPORT_HEIGHT/10;
-const RENDER_VLINES_MAX_HEIGHT = VIEWPORT_HEIGHT;
 
 class Render {
     constructor() {
-        this.horizonThreshold = 2/3;    // el umbral del horizonte esta a 1/3 de distancia de la base
+        this.horizonThreshold = 3/5;    // el umbral del horizonte esta a 1/3 de distancia de la base
         this.vLinesHeight = [];
         this.vLinesOffset = [];
+
+        this.vLinesAlpha = [];
     }
 
     update() {
         this.vLinesHeight = [];
         this.vLinesOffset = [];
+        this.vLinesAlpha = [];
 
         for (let iRay = 0; iRay < FOV_NUM_RAYS; iRay++) {
-            this.vLinesHeight.push(2000/objPlayer.fov.rays[iRay].distance);
+            this.vLinesAlpha.push(this.calculateVLineAlpha(iRay));
+            this.vLinesHeight.push(this.calculateVLineHeight(iRay));
             this.vLinesOffset.push(this.vLinesHeight[iRay]/2);
-            if (!iRay) console.log("Offset: "+this.vLinesOffset[iRay] + "\t| Height: " + this.vLinesHeight[iRay] + ".");
         }
     }
 
+    calculateVLineHeight(i) {
+        let distToProjectionPlane = VIEWPORT_WIDTH/2 / Math.tan(FOV/2);
+        let height = (TILE_SIZE / objPlayer.fov.rays[i].distance) * distToProjectionPlane;
+        return height;
+    }
+
+    calculateVLineAlpha(i) {
+        let answer = 255 - objPlayer.fov.rays[i].distance * 255/objPlayer.fov.maxDistance;
+        if (objPlayer.fov.rays[i].rayHitsVertically) answer *= 0.9;
+        return answer;
+    }
+
     loadProjection() {
-        fill(255,255,255);
         strokeWeight(0);
         
         for (let iVLine = 0; iVLine < FOV_NUM_RAYS; iVLine++) {
+            fill(this.vLinesAlpha[iVLine], this.vLinesAlpha[iVLine], this.vLinesAlpha[iVLine]);
             rect(
                 RENDER_VLINES_SCALING * (iVLine * RENDER_VLINES_WIDTH),
                 this.horizonThreshold * VIEWPORT_HEIGHT - this.vLinesOffset[iVLine],
-                RENDER_VLINES_WIDTH + 1,
+                RENDER_VLINES_WIDTH,
                 this.vLinesHeight[iVLine]
             );
-
         }
     }
 }

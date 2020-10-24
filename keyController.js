@@ -8,7 +8,7 @@
     goals:
         o movimiento del jugador (input)    [x]
         o controlar fov del jugador (input) [x]
-        o fishbowl effect del fov (input)   [x]
+        o fisheye effect del fov (input)   [x]
     
     estado:
         > terminado (por ahora no mas controles a anadir)
@@ -63,9 +63,9 @@ function keyPressed() {
         if (objPlayer.level < 0) objPlayer.level = objMap.nLevels-1;
     }
 
-    // fishbowl effect
+    // fisheye effect
     if (keyCode == KeyF) {
-        objPlayer.fishbowlEffect = !objPlayer.fishbowlEffect;
+        objPlayer.fisheyeEffect = !objPlayer.fisheyeEffect;
     }
 
 }
