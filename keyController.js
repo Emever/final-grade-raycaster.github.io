@@ -16,13 +16,22 @@
 */
 
 
-const KeyW = 87;
-const KeyA = 65;
-const KeyS = 83;
-const KeyD = 68;
-const KeyF = 70;
+const KeyW = 87;    // moverse hacia delante
+const KeyA = 65;    // girar a la izquierda
+const KeyS = 83;    // moverse hacia atras
+const KeyD = 68;    // girar a la derecha
 
-const KeyShift = 16;
+const KeyF = 70;    // switch efecto ojo de pez
+
+const KeyArrowUp = 38;      // subir 1 nivel de altura
+const KeyArrowDown = 40;    // bajar 1 nivel de altura
+const KeyArrowLeft = 37;
+const KeyArrowRight = 39;
+
+const KeySpace = 32;    // saltar
+const keyLeftCtrl = 17; // agacharse
+
+const KeyShift = 16;    // potenciador
 
 function keyPressed() {
     let updateRate = 1;
@@ -45,10 +54,20 @@ function keyPressed() {
         objPlayer.fov.turnDirection = -1*updateRate;
     }
 
+    // level controls
+    if (keyCode == KeyArrowUp) {
+        objPlayer.level ++;
+        if (objPlayer.level >= objMap.nLevels) objPlayer.level = 0;
+    } else if (keyCode == KeyArrowDown) {
+        objPlayer.level--;
+        if (objPlayer.level < 0) objPlayer.level = objMap.nLevels-1;
+    }
+
     // fishbowl effect
     if (keyCode == KeyF) {
         objPlayer.fishbowlEffect = !objPlayer.fishbowlEffect;
     }
+
 }
 
 function keyReleased() {

@@ -24,14 +24,26 @@ class Map {
         this.grid = [
             [   // level 1
                 [1, 1, 1, 1, 1, 1, 1, 1, 1, 1], // row 1
-                [1, 0, 0, 0, 0, 0, 0, 0, 0, 1], // row 2...
-                [1, 0, 0, 0, 0, 0, 0, 0, 0, 1],
-                [1, 1, 0, 0, 0, 0, 0, 1, 0, 1],
-                [1, 0, 0, 0, 0, 0, 0, 0, 0, 1],
+                [1, 0, 1, 1, 0, 0, 0, 0, 0, 1], // row 2...
+                [1, 0, 0, 1, 1, 0, 0, 0, 0, 1],
+                [1, 1, 0, 0, 1, 0, 0, 1, 0, 1],
+                [1, 0, 0, 1, 0, 0, 0, 0, 0, 1],
                 [1, 0, 0, 0, 0, 0, 0, 0, 0, 1],
                 [1, 0, 0, 0, 0, 0, 0, 0, 0, 1],
                 [1, 0, 1, 1, 0, 0, 1, 0, 0, 1],
                 [1, 0, 1, 0, 0, 0, 1, 0, 0, 1],
+                [1, 1, 1, 1, 1, 1, 1, 1, 1, 1]
+            ],
+            [   // level 2
+                [1, 1, 1, 1, 1, 1, 1, 1, 1, 1], // row 1
+                [1, 0, 0, 0, 0, 0, 0, 0, 0, 1], // row 2...
+                [1, 0, 0, 0, 0, 0, 0, 0, 0, 1],
+                [1, 0, 0, 0, 0, 0, 0, 0, 0, 1],
+                [1, 0, 0, 0, 0, 0, 0, 0, 0, 1],
+                [1, 0, 0, 0, 0, 0, 0, 0, 0, 1],
+                [1, 0, 0, 0, 0, 0, 0, 0, 0, 1],
+                [1, 0, 0, 0, 0, 0, 0, 0, 0, 1],
+                [1, 0, 0, 0, 0, 0, 0, 0, 0, 1],
                 [1, 1, 1, 1, 1, 1, 1, 1, 1, 1]
             ]
         ];
@@ -113,12 +125,30 @@ class Map {
 
     // mostrar visual del mapa
     render() {
+        // fondo del minimapa
+        fill(0, 0, 0, 125);
+        rect(
+            0,
+            0,
+            MAP_SCALING * this.width * TILE_SIZE,
+            MAP_SCALING * this.height * TILE_SIZE
+        );
+
+        // info sobre el nivel mostrado
+        textSize(TILE_SIZE/2);
+        fill(255,255,255);
+        text(
+            'Level '+(objPlayer.level+1)+'/'+this.nLevels,
+            MAP_SCALING * TILE_SIZE/2,
+            MAP_SCALING * (this.height+1.5) * TILE_SIZE
+        );
+
+        // mostramos solo los muros del nivel
         var iTile=0;
-        while (iTile < this.tileset.length) {
+        while (iTile < this.walls.length) {
             // TODO: POR AHORA ES 1, PERO MAS ADELANTE NECESITAREMOS CAMBIARLO POR EL NIVEL EN QUE SE ENCUENTRE EL JUGADOR
-            let tile = this.tileset[iTile];
-            if (tile.level == 0)
-                tile.render();
+            let tile = this.walls[iTile];
+            tile.render();
             iTile++;
         }
     }
@@ -139,11 +169,14 @@ class Tile {
 
     render() {
         // pinta el muro de un color y none transparente
-        //stroke('#222222');
-        stroke('rgba(255,255,255,0.1)');
-        strokeWeight(0);
-        if(this.class == "wall") fill(200,200,200);
-        else if(this.class == "none") fill(200,200,200, 0);
+        strokeWeight(1);
+        stroke(200,200,200);
+        fill(200,200,200);
+        if (objPlayer.level != this.level) {
+            fill(200,200,200,25);
+            strokeWeight(0);
+        }
+
         rect(
             MAP_SCALING * this.xPos,
             MAP_SCALING * this.YPos,

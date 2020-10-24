@@ -9,14 +9,14 @@
     
     goals:
         o movimiento del jugador (nCol) [x]
-        o mov del jugador, colisiones   [ ]
+        o mov del jugador, colisiones   [x]
         o mostrar el jugador en el mapa [x]
-        o mostrar FOV del player (mapa) [ ]
-        o cargar array de rayos del FOV [ ]
-        o altura y diferentes niveles   [ ]
+        o mostrar FOV del player (mapa) [x]
+        o cargar array de rayos del FOV [x]
+        o altura y diferentes niveles   [x] (falta comprobar)
     
     estado:
-        > en proceso...
+        > terminado (1 pendiente de comprobación)
 */
 
 const FOV = degreesToRadians(75); //recomendado numero impar
@@ -131,6 +131,7 @@ class FieldOfView {
 
     render() {
         // Player main angle view render - - - - - - - - - - - - - - - - - - 
+        /*
         stroke(0,200,255);
         strokeWeight(1);
         line(MAP_SCALING * objPlayer.x,
@@ -138,6 +139,7 @@ class FieldOfView {
             MAP_SCALING * (objPlayer.x + 50 * Math.cos(this.angleView)),
             MAP_SCALING * (objPlayer.y + 50 * Math.sin(this.angleView))
         );
+        */
 
         // FOV rays main angle view render - - - - - - - - - - - - - - - - - - 
         for (let iRay=0; iRay < FOV_NUM_RAYS; iRay++) this.rays[iRay].render();
@@ -175,7 +177,7 @@ class Player {
         this.fov.render();
 
         noStroke();
-        fill(0,200,255);
+        fill(0,200,255,255);
         circle(MAP_SCALING * this.x,
             MAP_SCALING * this.y,
             MAP_SCALING * 4);
