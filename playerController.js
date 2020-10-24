@@ -93,10 +93,10 @@ class Ray {
     render() {
         stroke('rgba(0,200,255,0.3)');
         strokeWeight(1);
-        line(objPlayer.x,
-            objPlayer.y,
-            objPlayer.x + MAP_SCALING * this.dX,
-            objPlayer.y + MAP_SCALING * this.dY
+        line(MAP_SCALING * objPlayer.x,
+            MAP_SCALING * objPlayer.y,
+            MAP_SCALING * (objPlayer.x + this.dX),
+            MAP_SCALING * (objPlayer.y + this.dY)
         );
     }
 }
@@ -133,16 +133,10 @@ class FieldOfView {
         // Player main angle view render - - - - - - - - - - - - - - - - - - 
         stroke(0,200,255);
         strokeWeight(1);
-        /*
-        line(MAP_SCALING * this.oX,
-            MAP_SCALING * this.oY,
-            0,
-            0
-        );*/
         line(MAP_SCALING * objPlayer.x,
             MAP_SCALING * objPlayer.y,
-            MAP_SCALING * (objPlayer.x + 100 * Math.cos(this.angleView)),
-            MAP_SCALING * (objPlayer.y + 100 * Math.sin(this.angleView))
+            MAP_SCALING * (objPlayer.x + 50 * Math.cos(this.angleView)),
+            MAP_SCALING * (objPlayer.y + 50 * Math.sin(this.angleView))
         );
 
         // FOV rays main angle view render - - - - - - - - - - - - - - - - - - 

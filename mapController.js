@@ -141,7 +141,7 @@ class Tile {
         // pinta el muro de un color y none transparente
         //stroke('#222222');
         stroke('rgba(255,255,255,0.1)');
-        strokeWeight(1);
+        strokeWeight(0);
         if(this.class == "wall") fill(200,200,200);
         else if(this.class == "none") fill(200,200,200, 0);
         rect(
