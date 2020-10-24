@@ -35,20 +35,44 @@ class Ray {
 
     cast() {
         let yWallhitResult = this.checkYWallhit();
-        this.dX = yWallhitResult[0];
-        this.dY = yWallhitResult[1];
         let xWallhitResult = this.checkXWallhit();
-
+        this.dX = xWallhitResult[0];
+        this.dY = xWallhitResult[1];
 
     }
 
-    checkXWallhit() {}
+    checkXWallhit() {
+        // esta funcion detecta las colisiones del rayo a medida que su Y evoluciona (sube/baja de fila en la grid)
+        // la primera distancia depende de la posición del jugador en la grid
+        let rayGoesRight = (Math.cos(this.direction) < 0)? false : true;    // TRUE hacia la derecha, FALSE si va hacia la izquierda
+        let rayGoesUp = (Math.sin(this.direction) < 0)? true : false;       // TRUE si el rayo va hacia arriba, FALSE si va hacia abajo
+
+
+        // los 'steps' es la distancia que se repetira en cada eje (x e y) hasta encontrar un muro
+        let xStep = TILE_SIZE;  // verticalmente, siempre encontrara la siguiente coordenada de la grid a TILE_SIZE px de distancia
+        xStep *= (rayGoesRight)? 1:-1;
+        let yStep = xStep * Math.tan(this.direction);
+        let xInit = Math.floor(objPlayer.x/TILE_SIZE) * TILE_SIZE - objPlayer.x;
+        xInit += (rayGoesRight)? TILE_SIZE:0;
+        let yInit = xInit * Math.tan(this.direction);
+
+        
+        let xDist = xInit;
+        let yDist = yInit;
+
+        // repetir hasta encontrar un muro
+        while (!objMap.hasWallAt(objPlayer.x + xDist + ((rayGoesRight)? 0:-TILE_SIZE), objPlayer.y + yDist, objPlayer.level)) {
+            xDist += xStep;
+            yDist += yStep;
+        }
+        
+        return [xDist, yDist];
+    }
 
     checkYWallhit() {
         // esta funcion detecta las colisiones del rayo a medida que su Y evoluciona (sube/baja de fila en la grid)
         // la primera distancia depende de la posición del jugador en la grid
         let rayGoesUp = (Math.sin(this.direction) < 0)? true : false;       // TRUE si el rayo va hacia arriba, FALSE si va hacia abajo
-        let rayGoesRight = (Math.cos(this.direction) < 0)? false : true;    // TRUE hacia la derecha, FALSE si va hacia la izquierda
 
         // los 'steps' es la distancia que se repetira en cada eje (x e y) hasta encontrar un muro
         let yStep = TILE_SIZE;  // verticalmente, siempre encontrara la siguiente coordenada de la grid a TILE_SIZE px de distancia
