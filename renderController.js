@@ -26,16 +26,16 @@ class Render {
         this.vLinesHeight = [];
         this.vLinesOffset = [];
 
-        this.vLinesAlpha = [];
+        this.vLinesColor = [];
     }
 
     update() {
         this.vLinesHeight = [];
         this.vLinesOffset = [];
-        this.vLinesAlpha = [];
+        this.vLinesColor = [];
 
         for (let iRay = 0; iRay < FOV_NUM_RAYS; iRay++) {
-            this.vLinesAlpha.push(this.calculateVLineAlpha(iRay));
+            this.vLinesColor.push(this.calculateVLineColor(iRay));
             this.vLinesHeight.push(this.calculateVLineHeight(iRay));
             this.vLinesOffset.push(this.vLinesHeight[iRay]/2);
         }
@@ -47,9 +47,9 @@ class Render {
         return height;
     }
 
-    calculateVLineAlpha(i) {
-        let answer = 255 - objPlayer.fov.rays[i].distance * 255/objPlayer.fov.maxDistance;
-        if (objPlayer.fov.rays[i].rayHitsVertically) answer *= 0.9;
+    calculateVLineColor(i) {
+        let answer = 255 - (objPlayer.fov.rays[i].distance * 255/objPlayer.fov.maxDistance);
+        if (objPlayer.fov.rays[i].rayHitsVertically) answer *= 0.8;
         return answer;
     }
 
@@ -57,7 +57,7 @@ class Render {
         strokeWeight(0);
         
         for (let iVLine = 0; iVLine < FOV_NUM_RAYS; iVLine++) {
-            fill(this.vLinesAlpha[iVLine], this.vLinesAlpha[iVLine], this.vLinesAlpha[iVLine]);
+            fill(this.vLinesColor[iVLine], this.vLinesColor[iVLine], this.vLinesColor[iVLine]);
             rect(
                 RENDER_VLINES_SCALING * (iVLine * RENDER_VLINES_WIDTH),
                 this.horizonThreshold * VIEWPORT_HEIGHT - this.vLinesOffset[iVLine],

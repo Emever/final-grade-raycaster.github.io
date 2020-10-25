@@ -12,7 +12,7 @@
 
 // global variables
 var objMap = new Map();
-var objPlayer = new Player(162,162,0);
+var objPlayer = new Player(162, 162, 1, Math.PI/3);
 var objRender = new Render();
 
 

@@ -108,8 +108,8 @@ class Ray {
 }
 
 class FieldOfView {
-    constructor() {
-        this.angleView = Math.PI/2;
+    constructor(oAngleView) {
+        this.angleView = oAngleView;
         this.fovSpeed = 2 * Math.PI / 180;
         this.turnDirection = 0; // -1 == left, 1 == right
 
@@ -155,13 +155,15 @@ class FieldOfView {
 }
 
 class Player {
-    constructor(oX, oY, oLevel) {
-        this.level = oLevel;
+    constructor(oX, oY, oLevel, oAngleView) {
+        this.level = oLevel - 1;
         this.x = oX;
         this.y = oY;
-        this.fov = new FieldOfView(this.x, this.y);
-        this.movSpeed = 2;    // el jugador avanza 1.5 px/frame
-        this.walkDirection = 0; // -1 == back, 1 == front
+        this.fov = new FieldOfView(oAngleView);
+        
+        this.movSpeed = 2;          // el jugador avanza 2 px/frame
+        this.walkDirection = 0;     // -1 == back, 1 == front
+        this.flankDirection = 0;    // -1 == left, 1 == right
 
         this.fisheyeEffect = false;
     }
@@ -174,8 +176,16 @@ class Player {
     }
 
     movePlayer() {
-        let dx = this.x + this.walkDirection*this.movSpeed * Math.cos(this.fov.angleView);
-        let dy = this.y + this.walkDirection*this.movSpeed * Math.sin(this.fov.angleView);
+        // caminar: avanzar / retroceder _____________________________________________________ (1)
+        let dx = this.x + this.walkDirection * this.movSpeed * Math.cos(this.fov.angleView);
+        let dy = this.y + this.walkDirection * this.movSpeed * Math.sin(this.fov.angleView);
+        // tratamos X e Y por separado: el jugador tal vez no pueda moverse en X pero si en Y.
+        if (!objMap.hasWallAtX(dx, this.y, this.level)) this.x = dx;
+        if (!objMap.hasWallAtY(this.x, dy, this.level)) this.y = dy;
+
+        // flanquear: caminar hacia la izquierda / derecha ___________________________________ (2)
+        dx = this.x + this.flankDirection * this.movSpeed * Math.cos(this.fov.angleView + Math.PI/2);
+        dy = this.y + this.flankDirection * this.movSpeed * Math.sin(this.fov.angleView + Math.PI/2);
         // tratamos X e Y por separado: el jugador tal vez no pueda moverse en X pero si en Y.
         if (!objMap.hasWallAtX(dx, this.y, this.level)) this.x = dx;
         if (!objMap.hasWallAtY(this.x, dy, this.level)) this.y = dy;

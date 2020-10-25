@@ -21,6 +21,9 @@ const KeyA = 65;    // girar a la izquierda
 const KeyS = 83;    // moverse hacia atras
 const KeyD = 68;    // girar a la derecha
 
+const KeyQ = 81;
+const KeyE = 69;
+
 const KeyF = 70;    // switch efecto ojo de pez
 
 const KeyArrowUp = 38;      // subir 1 nivel de altura
@@ -46,12 +49,21 @@ function keyPressed() {
     // player controls
     if (keyCode == KeyW) {
         objPlayer.walkDirection = 1*updateRate;
-    } else if (keyCode == KeyS) {
+    }
+    if (keyCode == KeyS) {
         objPlayer.walkDirection = -1*updateRate;
-    } else if (keyCode == KeyD) {
-        objPlayer.fov.turnDirection = 1*updateRate;
-    } else if (keyCode == KeyA) {
+    }
+    if (keyCode == KeyA) {
+        objPlayer.flankDirection = -1*updateRate;
+    }
+    if (keyCode == KeyD) {
+        objPlayer.flankDirection = 1*updateRate;
+    }
+    if (keyCode == KeyQ || keyCode == KeyArrowLeft) {
         objPlayer.fov.turnDirection = -1*updateRate;
+    }
+    if (keyCode == KeyE || keyCode == KeyArrowRight) {
+        objPlayer.fov.turnDirection = 1*updateRate;
     }
 
     // level controls
@@ -73,11 +85,20 @@ function keyPressed() {
 function keyReleased() {
     if (keyCode == KeyW) {
         objPlayer.walkDirection = 0;
-    } else if (keyCode == KeyS) {
+    }
+    if (keyCode == KeyS) {
         objPlayer.walkDirection = 0;
-    } else if (keyCode == KeyD) {
+    }
+    if (keyCode == KeyA) {
+        objPlayer.flankDirection = 0;
+    }
+    if (keyCode == KeyD) {
+        objPlayer.flankDirection = 0;
+    }
+    if (keyCode == KeyQ || keyCode == KeyArrowLeft) {
         objPlayer.fov.turnDirection = 0;
-    } else if (keyCode == KeyA) {
+    }
+    if (keyCode == KeyE || keyCode == KeyArrowRight) {
         objPlayer.fov.turnDirection = 0;
     }
 }
