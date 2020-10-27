@@ -13,11 +13,12 @@
         > en proceso...
 */
 
-const IMG_NAMES = [
-    "map_level01_01.png",
-    "map_level01_02.png",
-    "map_level01_03.png",
-    "map_level02_01.png"
+// si anadimos mas imagenes al proyecto, debemos agregarlas a esta constante para ser leidas
+const IMG_LIST = [
+    {name: "map_level01_01.png", height: 10, width: 10},
+    {name: "map_level01_02.png", height: 10, width: 10},
+    {name: "map_level01_03.png", height: 10, width: 10},
+    {name: "map_level02_01.png", height: 26, width: 16}
 ];
 
 class ImageLoader {
@@ -36,8 +37,8 @@ class ImageLoader {
         this.ctx.imageSmoothingEnabled = false;
 
         // (0) por cada imagen del array:
-        for (var iImg = 0; iImg < IMG_NAMES.length; iImg++) {
-            let url = 'img/' + IMG_NAMES[iImg];
+        for (var iImg = 0; iImg < IMG_LIST.length; iImg++) {
+            let url = 'img/' + IMG_LIST[iImg].name;
 
             // (1) guardar tanta info de la imagen como sea posible antes de leerla
             this.images.push(
@@ -47,16 +48,18 @@ class ImageLoader {
                     pixels:   [],   // aun no podemos acceder al array de pixeles
                     function: "",   // un mapa, un enemigo, una textura...
                     path:   url,
-                    height: 16,
-                    width:  16
+                    height: IMG_LIST[iImg].height,
+                    width:  IMG_LIST[iImg].width
                 }
             );
 
             this.images[iImg].data = loadImage(url);
-            if (IMG_NAMES[iImg].includes('map')) this.images[iImg].function = "mapgrid";
-            else if (IMG_NAMES[iImg].includes('texture')) this.images[iImg].function = "texture";
-            else if (IMG_NAMES[iImg].includes('ground')) this.images[iImg].function = "ground";
-            else if (IMG_NAMES[iImg].includes('sky')) this.images[iImg].function = "sky";
+            //console.log(this.images[iImg].data);
+
+            if (this.images[iImg].path.includes('map')) this.images[iImg].function = "mapgrid";
+            else if (this.images[iImg].path.includes('texture')) this.images[iImg].function = "texture";
+            else if (this.images[iImg].path.includes('ground')) this.images[iImg].function = "ground";
+            else if (this.images[iImg].path.includes('sky')) this.images[iImg].function = "sky";
 
         }
     }
