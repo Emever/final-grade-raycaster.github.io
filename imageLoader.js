@@ -27,6 +27,7 @@ class ImageLoader {
         createCanvas(16, 16);
         this.canvas = document.getElementsByClassName('p5Canvas')[0];
         this.ctx = this.canvas.getContext('2d');
+
     }
 
     init() {
@@ -35,27 +36,28 @@ class ImageLoader {
         this.ctx.imageSmoothingEnabled = false;
 
         // (0) por cada imagen del array:
-        for (let iImg = 0; iImg < IMG_NAMES.length; iImg++) {
-            // (1) cargar la imagen
-            loadImage('img/' + IMG_NAMES[iImg], img => {
-                
-                // (2) guardar la info basica en el array images de la clase
-                this.images.push(
-                    {
-                        data:    null,  // aun no podemos acceder a la imagen
-                        pixels:   [],   // aun no podemos acceder al array de pixeles
-                        function: "",   // un mapa, un enemigo, una textura...
-                        path:   'img/' + IMG_NAMES[iImg],
-                        height: img.height,
-                        width:  img.width
-                    }
-                );
-                this.images[iImg].data = img;
-                if (IMG_NAMES[iImg].includes('map')) this.images[iImg].function = "mapgrid";
-                else if (IMG_NAMES[iImg].includes('texture')) this.images[iImg].function = "texture";
-                else if (IMG_NAMES[iImg].includes('ground')) this.images[iImg].function = "ground";
-                else if (IMG_NAMES[iImg].includes('sky')) this.images[iImg].function = "sky";
-            });
+        for (var iImg = 0; iImg < IMG_NAMES.length; iImg++) {
+            let url = 'img/' + IMG_NAMES[iImg];
+
+            // (1) guardar tanta info de la imagen como sea posible antes de leerla
+            this.images.push(
+                {
+                    index:  iImg,
+                    data:    null,  // aun no podemos acceder a la imagen
+                    pixels:   [],   // aun no podemos acceder al array de pixeles
+                    function: "",   // un mapa, un enemigo, una textura...
+                    path:   url,
+                    height: 16,
+                    width:  16
+                }
+            );
+
+            this.images[iImg].data = loadImage(url);
+            if (IMG_NAMES[iImg].includes('map')) this.images[iImg].function = "mapgrid";
+            else if (IMG_NAMES[iImg].includes('texture')) this.images[iImg].function = "texture";
+            else if (IMG_NAMES[iImg].includes('ground')) this.images[iImg].function = "ground";
+            else if (IMG_NAMES[iImg].includes('sky')) this.images[iImg].function = "sky";
+
         }
     }
 
