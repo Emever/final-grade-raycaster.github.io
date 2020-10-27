@@ -47,7 +47,7 @@ class Map {
                 [1, 1, 1, 1, 1, 1, 1, 1, 1, 1]
             ]
         ];
-        this.grid = this.levelImageToGrid('level01'); //TODO: LECTOR DE MAPAS DESDE UNA IMAGEN
+        this.grid = this.levelImageToGrid('level01');
         this.nLevels = this.grid.length;
         this.height = this.grid[0].length;
         this.width = this.grid[0][0].length;
@@ -84,20 +84,7 @@ class Map {
                 aux.push(auxRow);
             }
         }
-
-        //CHIVATOOOOOOOOOO
-        let cadena="";
-        for (let z=0; z<aux.length; z++) {
-            for(let y=0; y<aux[z].length; y++) {
-                for(let x=0; x<aux[z][y].length; x++) {
-                    cadena += aux[z][y][x] + "";
-                }
-                cadena += "\n";
-            }
-            console.log(cadena);
-        }
         
-
         return aux;
     }
 
