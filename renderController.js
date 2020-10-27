@@ -6,13 +6,13 @@
         - renderizar los muros de la simulacion
     
     goals:
-        o renderizar algo por pantalla      [ ]
+        o renderizar algo por pantalla      [x]
         o cargar texturas para los muros    [ ]
         o renderizar los muros con texturas [ ]
         o suelo y cielo personalizados      [ ]
     
     estado:
-        > en proceso...
+        > congelado hasta terminar ImageLoader
 */
 
 const VIEWPORT_WIDTH = 960;

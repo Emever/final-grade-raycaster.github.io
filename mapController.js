@@ -13,7 +13,7 @@
         o tener una lista con todos los muros       [x]
     
     estado:
-        > congelado en cargar info desde una imagen.
+        > congelado hasta terminar ImageLoader
 */
 
 const MAP_SCALING = .5;    //factor de reescalado del mapa (utilidad como minimapa)
@@ -47,7 +47,7 @@ class Map {
                 [1, 1, 1, 1, 1, 1, 1, 1, 1, 1]
             ]
         ];
-        //levelImageToGrid('level-map-image-grid'); //TODO: LECTOR DE MAPAS DESDE UNA IMAGEN
+        this.grid = this.levelImageToGrid('level01'); //TODO: LECTOR DE MAPAS DESDE UNA IMAGEN
         this.nLevels = this.grid.length;
         this.height = this.grid[0].length;
         this.width = this.grid[0][0].length;
@@ -58,6 +58,47 @@ class Map {
         this.walls = [];
 
         this.init();
+    }
+
+    levelImageToGrid(level) {
+        let aux = [];
+        for (let indexImage=0; indexImage<imageLoader.images.length; indexImage++) {
+            let img = imageLoader.images[indexImage];
+
+            if (img.function == "mapgrid" && img.path.includes(level)) {
+                let auxRow = [];
+                for (let y=0; y<img.height; y++) {
+                    let auxCol = [];
+                    for (let x=0; x<img.width; x++) {
+                        // si el color es blanco == "none" == '0' en la grid
+                        if (img.pixels[y][x].levels[0] == 255
+                            && img.pixels[y][x].levels[1] == 255
+                            && img.pixels[y][x].levels[2] == 255) auxCol.push(0);
+                        // negro == "wall" == '1'
+                        else if (img.pixels[y][x].levels[0] == 0
+                            && img.pixels[y][x].levels[1] == 0
+                            && img.pixels[y][x].levels[2] == 0) auxCol.push(1);
+                    }
+                    auxRow.push(auxCol);
+                }
+                aux.push(auxRow);
+            }
+        }
+
+        //CHIVATOOOOOOOOOO
+        let cadena="";
+        for (let z=0; z<aux.length; z++) {
+            for(let y=0; y<aux[z].length; y++) {
+                for(let x=0; x<aux[z][y].length; x++) {
+                    cadena += aux[z][y][x] + "";
+                }
+                cadena += "\n";
+            }
+            console.log(cadena);
+        }
+        
+
+        return aux;
     }
 
     loadTileset() {

@@ -20,7 +20,7 @@
 */
 
 const FOV = degreesToRadians(75); //recomendado numero impar
-const FOV_NUM_RAYS = 160;
+const FOV_NUM_RAYS = 240;
 const FOV_ANGLE_SPACING = FOV / (FOV_NUM_RAYS - 1);
 
 class Ray {
@@ -193,11 +193,12 @@ class Player {
 
     render() {
         this.fov.render();
-
+        /*
         noStroke();
         fill(0,200,255,255);
         circle(MAP_SCALING * this.x,
             MAP_SCALING * this.y,
             MAP_SCALING * 4);
+        */
     }
 }
