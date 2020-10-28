@@ -193,12 +193,12 @@ class Player {
 
     render() {
         this.fov.render();
-        /*
+        
         noStroke();
         fill(0,200,255,255);
         circle(MAP_SCALING * this.x,
             MAP_SCALING * this.y,
-            MAP_SCALING * 4);
-        */
+            MAP_SCALING * 6);
+        
     }
 }

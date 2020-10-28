@@ -15,10 +15,10 @@
 
 // si anadimos mas imagenes al proyecto, debemos agregarlas a esta constante para ser leidas
 const IMG_LIST = [
-    {name: "map_level01_01.png", height: 10, width: 10},
-    {name: "map_level01_02.png", height: 10, width: 10},
-    {name: "map_level01_03.png", height: 10, width: 10},
-    {name: "map_level02_01.png", height: 26, width: 16}
+    "map_level01_01.png",
+    "map_level01_02.png",
+    "map_level01_03.png",
+    "map_level02_01.png"
 ];
 
 class ImageLoader {
@@ -38,7 +38,7 @@ class ImageLoader {
 
         // (0) por cada imagen del array:
         for (var iImg = 0; iImg < IMG_LIST.length; iImg++) {
-            let url = 'img/' + IMG_LIST[iImg].name;
+            let url = 'img/' + IMG_LIST[iImg];
 
             // (1) guardar tanta info de la imagen como sea posible antes de leerla
             this.images.push(
@@ -48,8 +48,8 @@ class ImageLoader {
                     pixels:   [],   // aun no podemos acceder al array de pixeles
                     function: "",   // un mapa, un enemigo, una textura...
                     path:   url,
-                    height: IMG_LIST[iImg].height,
-                    width:  IMG_LIST[iImg].width
+                    height: 16,
+                    width:  16
                 }
             );
 
@@ -69,15 +69,20 @@ class ImageLoader {
         for (let i=0; i < this.images.length; i++) {
             let img = this.images[i];
             
-            // (1) preparamos el canvas para renderizar la imagen
+            // (1) cargamos la informacion que falta en this.images
+            img.width = img.data.width;
+            img.height = img.data.height;
+
+            // (2) preparamos el canvas para renderizar la imagen
             this.canvas.style = "none";
             this.ctx.imageSmoothingEnabled = false;
-
+            
             this.canvas.width = img.width;
             this.canvas.height = img.height;
-            // (2) cargamos la imagen y obtenemos el array de informacion
+
+            // (3) cargamos la imagen y obtenemos el array de informacion
             image(img.data, 0, 0);
-            let data = this.ctx.getImageData(0, 0, this.canvas.width, this.canvas.height);
+            let data = this.ctx.getImageData(0, 0, img.width, img.height);
             this.dataToPixelArray(i, data.data);
             
         }
@@ -93,9 +98,14 @@ class ImageLoader {
         for (let y=0; y<image.height; y++) {
             auxArray = [];
 
-            for (let x=0; x<image.width; x++) {
-                // anadimos el color del pixel en la matriz
-                auxArray.push(this.getAproxColor([data[valueIndex + 0], data[valueIndex + 1], data[valueIndex + 2], data[valueIndex + 3]]));
+            for (let x=0; x<image.width; x++) { // anadimos el color del pixel en la matriz
+                 
+                // si la imagen es para cargar el mapa, debemos aproximar los colores; sino no es necesario
+                if (this.images[imageIndex].function == "mapgrid")
+                    auxArray.push(this.getAproxColor([data[valueIndex + 0], data[valueIndex + 1], data[valueIndex + 2], data[valueIndex + 3]]));
+                else
+                    auxArray.push(color(data[valueIndex + 0], data[valueIndex + 1], data[valueIndex + 2], data[valueIndex + 3]));
+
                 valueIndex += 4;
             }
             

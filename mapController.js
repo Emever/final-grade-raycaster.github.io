@@ -16,7 +16,7 @@
         > congelado hasta terminar ImageLoader
 */
 
-const MAP_SCALING = .5;    //factor de reescalado del mapa (utilidad como minimapa)
+const MAP_SCALING = .4;    //factor de reescalado del mapa (utilidad como minimapa)
 const TILE_SIZE = 32;   //32 pixeles cuadrados cada tile del mapa
 
 class Map {
@@ -168,7 +168,7 @@ class Map {
         text(
             'Level '+(objPlayer.level+1)+'/'+this.nLevels,
             MAP_SCALING * TILE_SIZE/2,
-            MAP_SCALING * (this.height+1.5) * TILE_SIZE
+            MAP_SCALING * (this.height + 2) * TILE_SIZE
         );
 
         // mostramos solo los muros del nivel
@@ -205,13 +205,13 @@ class Tile {
             fill(200,200,200,25);
             strokeWeight(0);
         }
-        // only print the tiles at your currnet level
-        if (objPlayer.level == this.level)
-            rect(
-                MAP_SCALING * this.xPos,
-                MAP_SCALING * this.YPos,
-                MAP_SCALING * TILE_SIZE,
-                MAP_SCALING * TILE_SIZE
-            );
+        
+        //if (objPlayer.level == this.level)    // para pintar solo el minimapa del nivel actual
+        rect(
+            MAP_SCALING * this.xPos,
+            MAP_SCALING * this.YPos,
+            MAP_SCALING * TILE_SIZE,
+            MAP_SCALING * TILE_SIZE
+        );
     }
 }
