@@ -85,8 +85,6 @@ class ImageLoader {
     }
 
     dataToPixelArray(imageIndex, data) {
-        let xPos = 0;
-        let yPos = 0;
         let valueIndex = 0;
         let image = this.images[imageIndex];
         // array contiene los valores R,G,B,A en serie (4 valores que se repiten)
@@ -97,12 +95,32 @@ class ImageLoader {
 
             for (let x=0; x<image.width; x++) {
                 // anadimos el color del pixel en la matriz
-                auxArray.push(color(data[valueIndex + 0], data[valueIndex + 1], data[valueIndex + 2], data[valueIndex + 3]));
+                auxArray.push(this.getAproxColor([data[valueIndex + 0], data[valueIndex + 1], data[valueIndex + 2], data[valueIndex + 3]]));
                 valueIndex += 4;
             }
             
             image.pixels.push(auxArray);
         }
+    }
+
+    getAproxColor(valuesArray) {
+        let newValues = []; // nuevos valores
+        // por cada valor, buscamos su aproximacion
+        for(let iValue = 0; iValue<valuesArray.length; iValue++) {
+            let aux = valuesArray[iValue];
+            if (aux < 25) newValues.push(0);
+            else if (aux >= 25 && aux < 50) newValues.push(25);
+            else if (aux >= 50 && aux < 75) newValues.push(50);
+            else if (aux >= 75 && aux < 100) newValues.push(75);
+            else if (aux >= 100 && aux < 125) newValues.push(100);
+            else if (aux >= 125 && aux < 150) newValues.push(125);
+            else if (aux >= 150 && aux < 175) newValues.push(150);
+            else if (aux >= 175 && aux < 200) newValues.push(175);
+            else if (aux >= 200 && aux < 225) newValues.push(200);
+            else if (aux >= 225 && aux <= 255) newValues.push(255);
+        }
+
+        return color(newValues[0], newValues[1], newValues[2], newValues[3]); 
     }
 
     consoleLogging() {
