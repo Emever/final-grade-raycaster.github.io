@@ -200,16 +200,18 @@ class Tile {
         strokeWeight(1);
         stroke(200,200,200);
         fill(200,200,200);
+        
         if (objPlayer.level != this.level) {
             fill(200,200,200,25);
             strokeWeight(0);
         }
-
-        rect(
-            MAP_SCALING * this.xPos,
-            MAP_SCALING * this.YPos,
-            MAP_SCALING * TILE_SIZE,
-            MAP_SCALING * TILE_SIZE
-        );
+        // only print the tiles at your currnet level
+        if (objPlayer.level == this.level)
+            rect(
+                MAP_SCALING * this.xPos,
+                MAP_SCALING * this.YPos,
+                MAP_SCALING * TILE_SIZE,
+                MAP_SCALING * TILE_SIZE
+            );
     }
 }
