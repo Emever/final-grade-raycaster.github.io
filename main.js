@@ -24,20 +24,23 @@
         > en proceso...
 */
 
-// global variables
+// global class variables
 var imageLoader;;
 
 var objMap;
 var objPlayer;
 var objRender;
 
-
 function preload() {
+    initCustomConst();
+
     imageLoader = new ImageLoader();
     imageLoader.init();
 }
 
 function setup() {
+    initSliders();
+
     imageLoader.loadImagesPixels();
 
     
@@ -46,7 +49,7 @@ function setup() {
     objRender = new Render();
 
     createCanvas(VIEWPORT_WIDTH, VIEWPORT_HEIGHT);
-    //createCanvas(MAP_SCALING * objMap.width * TILE_SIZE, MAP_SCALING * (objMap.height + 2) * TILE_SIZE);
+    //createCanvas(cMAP_SCALING * objMap.width * TILE_SIZE, cMAP_SCALING * (objMap.height + 2) * TILE_SIZE);
 
     objMap.render();
 }

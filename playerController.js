@@ -99,10 +99,10 @@ class Ray {
     render() {
         stroke('rgba(0,200,255,0.3)');
         strokeWeight(1);
-        line(MAP_SCALING * objPlayer.x,
-            MAP_SCALING * objPlayer.y,
-            MAP_SCALING * (objPlayer.x + this.dX),
-            MAP_SCALING * (objPlayer.y + this.dY)
+        line(cMAP_SCALING * objPlayer.x,
+            cMAP_SCALING * objPlayer.y,
+            cMAP_SCALING * (objPlayer.x + this.dX),
+            cMAP_SCALING * (objPlayer.y + this.dY)
         );
     }
 }
@@ -128,12 +128,12 @@ class FieldOfView {
     castFOVRays() {
         this.rays = [];
 
-        let rayAngle = this.angleView - FOV/2;
-        for (let iRay = 0; iRay < FOV_NUM_RAYS; iRay++) {
+        let rayAngle = this.angleView - cFOV/2;
+        for (let iRay = 0; iRay < cFOV_NUM_RAYS; iRay++) {
             let auxRay = new Ray(normalizeAngle(rayAngle));
             auxRay.cast();
             this.rays.push(auxRay);
-            rayAngle += FOV_ANGLE_SPACING;
+            rayAngle += cFOV_ANGLE_SPACING;
         }
     }
 
@@ -142,15 +142,15 @@ class FieldOfView {
         /*
         stroke(0,200,255);
         strokeWeight(1);
-        line(MAP_SCALING * objPlayer.x,
-            MAP_SCALING * objPlayer.y,
-            MAP_SCALING * (objPlayer.x + 50 * Math.cos(this.angleView)),
-            MAP_SCALING * (objPlayer.y + 50 * Math.sin(this.angleView))
+        line(cMAP_SCALING * objPlayer.x,
+            cMAP_SCALING * objPlayer.y,
+            cMAP_SCALING * (objPlayer.x + 50 * Math.cos(this.angleView)),
+            cMAP_SCALING * (objPlayer.y + 50 * Math.sin(this.angleView))
         );
         */
 
         // FOV rays main angle view render - - - - - - - - - - - - - - - - - - 
-        for (let iRay=0; iRay < FOV_NUM_RAYS; iRay++) this.rays[iRay].render();
+        for (let iRay=0; iRay < cFOV_NUM_RAYS; iRay++) this.rays[iRay].render();
     }
 }
 
@@ -196,9 +196,9 @@ class Player {
         
         noStroke();
         fill(0,200,255,255);
-        circle(MAP_SCALING * this.x,
-            MAP_SCALING * this.y,
-            MAP_SCALING * 6);
+        circle(cMAP_SCALING * this.x,
+            cMAP_SCALING * this.y,
+            cMAP_SCALING * 6);
         
     }
 }

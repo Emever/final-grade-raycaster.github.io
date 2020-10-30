@@ -10,6 +10,11 @@ function degreesToRadians(angle) {
     return angle * Math.PI/180;
 }
 
+function radiansToDegrees(angle) {
+    return angle / Math.PI*180;
+}
+
+
 function getDistFromCoordinates(oX, oY, dX, dY) {
     return Math.sqrt((dX-oX)*(dX-oX) + (dY-oY)*(dY-oY));
 }

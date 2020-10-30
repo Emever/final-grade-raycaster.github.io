@@ -34,7 +34,7 @@ class Render {
         this.vLinesOffset = [];
         this.vLinesColor = [];
 
-        for (let iRay = 0; iRay < FOV_NUM_RAYS; iRay++) {
+        for (let iRay = 0; iRay < cFOV_NUM_RAYS; iRay++) {
             this.vLinesColor.push(this.calculateVLineColor(iRay));
             this.vLinesHeight.push(this.calculateVLineHeight(iRay));
             this.vLinesOffset.push(this.vLinesHeight[iRay]/2);
@@ -42,7 +42,7 @@ class Render {
     }
 
     calculateVLineHeight(i) {
-        let distToProjectionPlane = VIEWPORT_WIDTH/2 / Math.tan(FOV/2);
+        let distToProjectionPlane = VIEWPORT_WIDTH/2 / Math.tan(cFOV/2);
         let height = (TILE_SIZE / objPlayer.fov.rays[i].distance) * distToProjectionPlane;
         return height;
     }
@@ -54,14 +54,15 @@ class Render {
     }
 
     loadProjection() {
-        strokeWeight(0);
+        strokeWeight(1);
+
         
-        for (let iVLine = 0; iVLine < FOV_NUM_RAYS; iVLine++) {
+        for (let iVLine = 0; iVLine < cFOV_NUM_RAYS; iVLine++) {
             fill(this.vLinesColor[iVLine], this.vLinesColor[iVLine], this.vLinesColor[iVLine]);
             rect(
-                RENDER_VLINES_SCALING * (iVLine * RENDER_VLINES_WIDTH),
+                cRENDER_VLINES_SCALING * (iVLine * cRENDER_VLINES_WIDTH),
                 this.horizonThreshold * VIEWPORT_HEIGHT - this.vLinesOffset[iVLine],
-                RENDER_VLINES_WIDTH,
+                cRENDER_VLINES_WIDTH+.5,
                 this.vLinesHeight[iVLine]
             );
         }

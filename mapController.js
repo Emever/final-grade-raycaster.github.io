@@ -158,8 +158,8 @@ class Map {
         rect(
             0,
             0,
-            MAP_SCALING * this.width * TILE_SIZE,
-            MAP_SCALING * this.height * TILE_SIZE
+            cMAP_SCALING * this.width * TILE_SIZE,
+            cMAP_SCALING * this.height * TILE_SIZE
         );
 
         // info sobre el nivel mostrado
@@ -167,8 +167,8 @@ class Map {
         fill(0,200,255);
         text(
             'Level '+(objPlayer.level+1)+'/'+this.nLevels,
-            MAP_SCALING * TILE_SIZE/2,
-            MAP_SCALING * (this.height + 2) * TILE_SIZE
+            cMAP_SCALING * TILE_SIZE/2,
+            cMAP_SCALING * (this.height + 2) * TILE_SIZE
         );
 
         // mostramos solo los muros del nivel
@@ -208,10 +208,10 @@ class Tile {
         
         //if (objPlayer.level == this.level)    // para pintar solo el minimapa del nivel actual
         rect(
-            MAP_SCALING * this.xPos,
-            MAP_SCALING * this.YPos,
-            MAP_SCALING * TILE_SIZE,
-            MAP_SCALING * TILE_SIZE
+            cMAP_SCALING * this.xPos,
+            cMAP_SCALING * this.YPos,
+            cMAP_SCALING * TILE_SIZE,
+            cMAP_SCALING * TILE_SIZE
         );
     }
 }
