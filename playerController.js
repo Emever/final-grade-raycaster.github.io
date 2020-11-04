@@ -29,17 +29,19 @@ class Ray {
         this.dX = 0;    // destination x position
         this.dY = 0;    // destination y position
         this.distance = objPlayer.fov.maxDistance;  // distancia recorrida por el rayo
+        
         this.rayHitsVertically = false;
+        this.rayImpactsOn = 0;  // 1 o + si impacta contra un muro: para saber que textura cargar en el renderer
     }
 
     cast() {
         let yWallhitResult = this.checkYWallhit();
         let xWallhitResult = this.checkXWallhit();
         if (yWallhitResult[2] < xWallhitResult[2]) {
-            [this.dX, this.dY, this.distance] = yWallhitResult;
+            [this.dX, this.dY, this.distance, this.rayImpactsOn] = yWallhitResult;
             this.rayHitsVertically = true;
         } else
-            [this.dX, this.dY, this.distance] = xWallhitResult;
+            [this.dX, this.dY, this.distance, this.rayImpactsOn] = xWallhitResult;
 
         if (!objPlayer.fisheyeEffect) {
             this.distance *= Math.cos(this.direction - objPlayer.fov.angleView);
@@ -68,8 +70,10 @@ class Ray {
             xDist += xStep;
             yDist += yStep;
         }
+        // miramos con que elemento ha chocado el rayo
+        let collision = objMap.hasWallAt(objPlayer.x + xDist + ((rayGoesRight)? 0:-TILE_SIZE), objPlayer.y + yDist, objPlayer.level);
         
-        return [xDist, yDist, getDistFromSidelength(xDist, yDist)];
+        return [xDist, yDist, getDistFromSidelength(xDist, yDist), collision];
     }
 
     checkYWallhit() {
@@ -88,12 +92,14 @@ class Ray {
 
         // repetir hasta encontrar un muro
         let sign = (rayGoesUp)? -1:1;
+        
         while (!objMap.hasWallAt(objPlayer.x + xDist, objPlayer.y + yDist - ((rayGoesUp)? TILE_SIZE:0), objPlayer.level)) {
             xDist += xStep * sign;
             yDist += yStep * sign;
         }
+        let collision = objMap.hasWallAt(objPlayer.x + xDist, objPlayer.y + yDist - ((rayGoesUp)? TILE_SIZE:0), objPlayer.level);
 
-        return [xDist, yDist, getDistFromSidelength(xDist, yDist)];
+        return [xDist, yDist, getDistFromSidelength(xDist, yDist), collision];
     }
 
     render() {

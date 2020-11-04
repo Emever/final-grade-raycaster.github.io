@@ -10,7 +10,7 @@
         o funciones para obtener info optimamente   [ ]
     
     estado:
-        > en proceso...
+        > leyendo texturas...
 */
 
 // si anadimos mas imagenes al proyecto, debemos agregarlas a esta constante para ser leidas
@@ -18,7 +18,8 @@ const IMG_LIST = [
     "map_level01_01.png",
     "map_level01_02.png",
     "map_level01_03.png",
-    "map_level02_01.png"
+    "map_level02_01.png",
+    "texture_wall_01.png"
 ];
 
 class ImageLoader {

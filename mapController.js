@@ -47,7 +47,7 @@ class Map {
                 [1, 1, 1, 1, 1, 1, 1, 1, 1, 1]
             ]
         ];
-        this.grid = this.levelImageToGrid('level01');
+        this.grid = this.levelImageToGrid('level02');
         this.nLevels = this.grid.length;
         this.height = this.grid[0].length;
         this.width = this.grid[0][0].length;
@@ -78,6 +78,10 @@ class Map {
                         else if (img.pixels[y][x].levels[0] == 0
                             && img.pixels[y][x].levels[1] == 0
                             && img.pixels[y][x].levels[2] == 0) auxCol.push(1);
+                        // verde == "wall2" == '2'
+                        else if (img.pixels[y][x].levels[0] == 0
+                            && img.pixels[y][x].levels[1] == 255
+                            && img.pixels[y][x].levels[2] == 0) auxCol.push(2);
                     }
                     auxRow.push(auxCol);
                 }
@@ -116,7 +120,7 @@ class Map {
         this.loadWallset();
     }
 
-    // busca si las coordenadas en parametros las ocupa un muro
+    // devuelve el valor de la grid en la posicion invocada (1 o + si es muro, 0 si es nada)
     hasWallAtX(dx, dy, dlevel) {
         if (dx < 0 || dx > this.width * TILE_SIZE) return true;
         //calculamos la tile de la grid donde se encontrara el jugador
