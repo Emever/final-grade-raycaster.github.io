@@ -19,8 +19,8 @@
         > terminado (1 pendiente de comprobación)
 */
 
-const FOV = degreesToRadians(75); //recomendado numero impar
-const FOV_NUM_RAYS = 240;
+const FOV = degreesToRadians(70); //recomendado numero impar
+const FOV_NUM_RAYS = 160;
 const FOV_ANGLE_SPACING = FOV / (FOV_NUM_RAYS - 1);
 
 class Ray {

@@ -47,7 +47,7 @@ class Map {
                 [1, 1, 1, 1, 1, 1, 1, 1, 1, 1]
             ]
         ];
-        this.grid = this.levelImageToGrid('level02');
+        this.grid = this.levelImageToGrid('level01');
         this.nLevels = this.grid.length;
         this.height = this.grid[0].length;
         this.width = this.grid[0][0].length;

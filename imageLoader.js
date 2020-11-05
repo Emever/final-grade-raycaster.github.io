@@ -19,8 +19,11 @@ const IMG_LIST = [
     "map_level01_02.png",
     "map_level01_03.png",
     "map_level02_01.png",
-    "texture_wall_01.png",
-    "texture_wall_02.png"
+    "texture_wall_01_16x16.png",
+    "texture_wall_02_16x16.png",
+    "texture_wall_01_32x32.png",
+    "texture_wall_02_32x32.png",
+    "texture_wall_03.png"
 ];
 
 class ImageLoader {
