@@ -68,7 +68,6 @@ function initSliders() {
         cFOV_ANGLE_SPACING = cFOV / (cFOV_NUM_RAYS - 1);
         // y tambien el ancho de cada vLine
         cRENDER_VLINES_WIDTH = VIEWPORT_WIDTH / cFOV_NUM_RAYS;
-        console.log(cRENDER_VLINES_WIDTH);
         document.getElementById('cFOV_NUM_RAYS_value').textContent = cFOV_NUM_RAYSslider.value;
 
     };

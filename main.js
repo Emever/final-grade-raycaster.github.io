@@ -25,7 +25,7 @@
 */
 
 // global class variables
-var imageLoader;;
+var imageLoader;
 
 var objMap;
 var objPlayer;
@@ -42,7 +42,7 @@ function setup() {
     initSliders();
 
     imageLoader.loadImagesPixels();
-
+    imageLoader.distributeImages();
     
     objMap = new Map();
     objPlayer = new Player(162, 162, 1, Math.PI/3);

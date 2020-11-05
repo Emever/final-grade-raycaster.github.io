@@ -7,10 +7,10 @@
     
     goals:
         o obtener un array con todas las imagenes   [x]
-        o funciones para obtener info optimamente   [ ]
+        o funciones para obtener info optimamente   [x]
     
     estado:
-        > leyendo texturas...
+        > terminado
 */
 
 // si anadimos mas imagenes al proyecto, debemos agregarlas a esta constante para ser leidas
@@ -19,7 +19,8 @@ const IMG_LIST = [
     "map_level01_02.png",
     "map_level01_03.png",
     "map_level02_01.png",
-    "texture_wall_01.png"
+    "texture_wall_01.png",
+    "texture_wall_02.png"
 ];
 
 class ImageLoader {
@@ -30,6 +31,12 @@ class ImageLoader {
         this.canvas = document.getElementsByClassName('p5Canvas')[0];
         this.ctx = this.canvas.getContext('2d');
 
+
+        // imagenes distribuidas por funcion
+        this.imagesMapgrid = [];
+        this.imagesTexture = [];
+        this.imagesSky = [];
+        this.imagesGround = [];
     }
 
     init() {
@@ -133,6 +140,36 @@ class ImageLoader {
 
         return color(newValues[0], newValues[1], newValues[2], newValues[3]); 
     }
+
+
+    distributeImages() {
+        this.imagesMapgrid = [];
+        this.imagesTexture = [];
+        this.imagesSky = [];
+        this.imagesGround = [];
+
+        for (let i=0; i<this.images.length; i++) {
+            switch (this.images[i].function) {
+                case "mapgrid":
+                    this.imagesMapgrid.push(this.images[i]);
+                    break;
+
+                case "texture":
+                    this.imagesTexture.push(this.images[i]);
+                    break;
+
+                case "ground":
+                    this.imagesGround.push(this.images[i]);
+                    break;
+
+                case "sky":
+                    this.imagesSky.push(this.images[i]);
+                    break;  
+
+            }
+        }
+    }
+
 
     consoleLogging() {
         for (let iImg = 0; iImg < this.images.length; iImg++) {

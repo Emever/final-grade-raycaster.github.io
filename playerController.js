@@ -26,8 +26,8 @@ const FOV_ANGLE_SPACING = FOV / (FOV_NUM_RAYS - 1);
 class Ray {
     constructor(direction) {
         this.direction = direction; // angulo del rayo (rads.)
-        this.dX = 0;    // destination x position
-        this.dY = 0;    // destination y position
+        this.dX = 0;    // distance to x position
+        this.dY = 0;    // distance to y position
         this.distance = objPlayer.fov.maxDistance;  // distancia recorrida por el rayo
         
         this.rayHitsVertically = false;
