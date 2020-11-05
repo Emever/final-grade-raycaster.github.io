@@ -201,13 +201,10 @@ class Tile {
 
     render() {
         // pinta el muro de un color y none transparente
-        strokeWeight(1);
-        stroke(200,200,200);
         fill(200,200,200);
         
         if (objPlayer.level != this.level) {
             fill(200,200,200,25);
-            strokeWeight(0);
         }
         
         //if (objPlayer.level == this.level)    // para pintar solo el minimapa del nivel actual

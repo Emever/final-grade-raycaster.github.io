@@ -175,10 +175,10 @@ class Player {
     }
 
     update() {
-        // actualizamos los rayos del fov del jugador (posicion, etc.)
-        this.fov.update();
         // actualizamos la posicion del jugador
         this.movePlayer()
+        // actualizamos los rayos del fov del jugador (posicion, etc.)
+        this.fov.update();
     }
 
     movePlayer() {
