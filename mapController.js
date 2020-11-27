@@ -9,11 +9,11 @@
     
     goals:
         o primer render en pantalla sobre el mapa   [x]
-        o cargar la información desde una imagen    [ ]
+        o cargar la información desde una imagen    [x]
         o tener una lista con todos los muros       [x]
     
     estado:
-        > congelado hasta terminar ImageLoader
+        > terminado
 */
 
 const MAP_SCALING = .4;    //factor de reescalado del mapa (utilidad como minimapa)
@@ -82,6 +82,14 @@ class Map {
                         else if (img.pixels[y][x].levels[0] == 0
                             && img.pixels[y][x].levels[1] == 255
                             && img.pixels[y][x].levels[2] == 0) auxCol.push(2);
+                        // verde azulado == "wall3" == '3'
+                        else if (img.pixels[y][x].levels[0] == 0
+                            && img.pixels[y][x].levels[1] == 255
+                            && img.pixels[y][x].levels[2] == 255) auxCol.push(3);
+                        // morado == "wall4" == '4'
+                        else if (img.pixels[y][x].levels[0] == 255
+                            && img.pixels[y][x].levels[1] == 0
+                            && img.pixels[y][x].levels[2] == 255) auxCol.push(4);
                     }
                     auxRow.push(auxCol);
                 }
@@ -168,7 +176,7 @@ class Map {
 
         // info sobre el nivel mostrado
         textSize(TILE_SIZE/2);
-        fill(0,200,255);
+        fill(50,50,50);
         text(
             'Level '+(objPlayer.level+1)+'/'+this.nLevels,
             cMAP_SCALING * TILE_SIZE/2,

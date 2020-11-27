@@ -15,20 +15,28 @@
     <body>
         <div id="customSliders" style="margin-top: 2rem;position: fixed;bottom: 30px;">
             <div style="display: flex;flex-direction: row;">
-                <p style="color: white; margin-left:1rem;margin-right: 1rem;">FOV value slider:</p>
+                <p style="color: white; margin-left:1rem;margin-right: 1rem;">Field of view angle:</p>
                 <input type="range" min="1" max="179" class="slider" id="FOV_Slider">
                 <p id="cFOV_value" style="color: rgb(0,200,255); margin-left:1rem;margin-right: 1rem;"></p>
             </div>
             <div style="display: flex;flex-direction: row;">
-                <p style="color: white; margin-left:1rem;margin-right: 1rem;">FOV_NUM_RAYS value slider:</p>
+                <p style="color: white; margin-left:1rem;margin-right: 1rem;">Number of rays casted:</p>
                 <input type="range" min="1" max="960" class="slider" id="FOV_NUM_RAYS_Slider">
                 <p id="cFOV_NUM_RAYS_value" style="color: rgb(0,200,255); margin-left:1rem;margin-right: 1rem;"></p>
             </div>
             <div style="display: flex;flex-direction: row;">
-                <p style="color: white; margin-left:1rem;margin-right: 1rem;">MAP_SCALING value slider:</p>
+                <p style="color: white; margin-left:1rem;margin-right: 1rem;">Minimap scaling proportion:</p>
                 <input type="range" min="0" max="2" step="0.1" class="slider" id="MAP_SCALING_Slider">
                 <p id="cMAP_SCALING_value" style="color: rgb(0,200,255); margin-left:1rem;margin-right: 1rem;"></p>
             </div>
+        </div>
+
+        <div id="helpControls" style="margin-top: 2rem;position:fixed;bottom: 30px">
+            <p><span style="color:yellow">WASD</span> to move around</p>
+            <p><span style="color:yellow">Q/E</span> or <span style="color:yellow">arrows left/right</span> to turn left/right</p>
+            <p><span style="color:yellow">Up/Down arrows</span> to load different levels</p>
+            <p><span style="color:yellow">F</span> to switch fish eye effect on/off</p>
+            <p><span style="color:yellow">R</span> to reload FPS data</p>
         </div>
     </body>
 </html>

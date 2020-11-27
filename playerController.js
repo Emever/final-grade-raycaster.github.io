@@ -13,10 +13,10 @@
         o mostrar el jugador en el mapa [x]
         o mostrar FOV del player (mapa) [x]
         o cargar array de rayos del FOV [x]
-        o altura y diferentes niveles   [x] (falta comprobar)
+        o altura y diferentes niveles   [x]
     
     estado:
-        > terminado (1 pendiente de comprobación)
+        > terminado
 */
 
 const FOV = degreesToRadians(70); //recomendado numero impar

@@ -13,10 +13,10 @@
         o mostrar el jugador en el mapa [x]
         o mostrar FOV del player (mapa) [x]
         o cargar array de rayos del FOV [x]
-        o altura y diferentes niveles   [x] (falta comprobar)
+        o altura y diferentes niveles   [x]
     
     estado:
-        > terminado (1 pendiente de comprobación)
+        > terminado
 */
 
 // global custom constant variables
@@ -28,7 +28,7 @@ var cMAP_SCALING;                                   // del MapController
 var cFOVslider, cFOV_NUM_RAYSslider/*, cFOV_ANGLE_SPACING*/;        // del PlayerController
 /*var cRENDER_VLINES_SCALING, cRENDER_VLINES_WIDTH;*/   // del RenderController
 var cMAP_SCALINGslider;                                   // del MapController
-
+var cFLOOR_NUM_HLINES;
 
 
 function initCustomConst() {

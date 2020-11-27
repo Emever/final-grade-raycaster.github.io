@@ -11,8 +11,7 @@
         o fisheye effect del fov (input)   [x]
     
     estado:
-        > terminado (por ahora no mas controles a anadir)
-        > falta comprobar!
+        > terminado
 */
 
 
@@ -25,6 +24,8 @@ const KeyQ = 81;
 const KeyE = 69;
 
 const KeyF = 70;    // switch efecto ojo de pez
+
+const KeyR = 82;    // switch efecto ojo de pez
 
 const KeyArrowUp = 38;      // subir 1 nivel de altura
 const KeyArrowDown = 40;    // bajar 1 nivel de altura
@@ -78,6 +79,11 @@ function keyPressed() {
     // fisheye effect
     if (keyCode == KeyF) {
         objPlayer.fisheyeEffect = !objPlayer.fisheyeEffect;
+    }
+
+    // reload FPS
+    if (keyCode == KeyR) {
+        reloadFPS();
     }
 
 }

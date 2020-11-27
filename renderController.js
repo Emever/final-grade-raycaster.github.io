@@ -8,17 +8,20 @@
     goals:
         o renderizar algo por pantalla      [x]
         o cargar texturas para los muros    [x]
-        o renderizar los muros con texturas [ ]
-        o suelo y cielo personalizados      [ ]
+        o renderizar los muros con texturas [x]
+        o pintar suelo y cielo              [x]
     
     estado:
-        > en proceso...
+        > terminado
 */
 
-const VIEWPORT_WIDTH = 960;
-const VIEWPORT_HEIGHT = 640;
+const VIEWPORT_WIDTH = 640; //before: (960,640)
+const VIEWPORT_HEIGHT = 480;
 const RENDER_VLINES_SCALING = 1;
 const RENDER_VLINES_WIDTH = VIEWPORT_WIDTH / FOV_NUM_RAYS / RENDER_VLINES_SCALING;
+
+const FLOOR_NUM_HLINES = 640/30;    // pick a number
+const CEILING_NUM_HLINES = 640/20;    // pick a number
 
 const RENDER_VLINE_SHADOW_EFFECT = .7;
 
@@ -112,6 +115,10 @@ class Render {
     constructor() {
         this.horizonThreshold = 3/5;    // el umbral del horizonte esta a 1/3 de distancia de la base
         this.vLines = [];
+        this.floorGradient = [];
+        this.floorHLinesSpacing = 0;
+        this.ceilingGradient = [];
+        this.ceilingHLinesSpacing = 0;
     }
 
     update() {
@@ -150,6 +157,53 @@ class Render {
         
         for (let iVLine = 0; iVLine < cFOV_NUM_RAYS; iVLine++) {
             this.vLines[iVLine].render(this.horizonThreshold);
+        }
+    }
+
+    setFloor() {
+        let c1 = color("#18b542");
+        let c2 = color("#03290d");
+        this.floorHLinesSpacing = VIEWPORT_HEIGHT*(1-this.horizonThreshold) / FLOOR_NUM_HLINES;
+        this.floorGradient = [];
+        for (let i=0; i<FLOOR_NUM_HLINES; i++) {
+            let interpolation = map(i, 0, FLOOR_NUM_HLINES, 0, 1);
+            
+            this.floorGradient.push(lerpColor(c1,c2,interpolation));
+        }
+    }
+
+    setCeiling() {
+        let c1 = color("#4aeaff");
+        let c2 = color("#b0f6ff");
+        this.ceilingHLinesSpacing = VIEWPORT_HEIGHT*(this.horizonThreshold) / CEILING_NUM_HLINES;
+        this.ceilingGradient = [];
+        for (let i=0; i<CEILING_NUM_HLINES; i++) {
+            let interpolation = map(i,0,CEILING_NUM_HLINES,0,1);
+            this.ceilingGradient.push(lerpColor(c1,c2,interpolation));
+        }
+    }
+
+    renderFloor() {
+        for (let i=0; i<FLOOR_NUM_HLINES; i++) {
+            fill(this.floorGradient[i]);
+            rect(
+                0,
+                VIEWPORT_HEIGHT - i*this.floorHLinesSpacing,
+                VIEWPORT_WIDTH,
+                this.floorHLinesSpacing
+            );
+        }
+    }
+
+    renderCeiling() {
+        for (let i=0; i<CEILING_NUM_HLINES; i++) {
+            fill(this.ceilingGradient[i]);
+            rect(
+                0,
+                i*this.ceilingHLinesSpacing,
+                VIEWPORT_WIDTH,
+                this.ceilingHLinesSpacing
+            );
         }
     }
 }

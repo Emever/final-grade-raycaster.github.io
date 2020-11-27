@@ -11,25 +11,22 @@
         o mas de 1 nivel    [x]
         o colisiones fov    [x]
         o renderizar 3D     [x]
-        o leer imagenes     [ ]
-        o yOffset del render realista   [ ]
-        o cargar mapa desde una imagen  [ ]
-        o render suelo/cielo por imagen [ ]
-        o texturas para los muros (img) [ ]
-        o cargar diferentes muros       [ ]
-        o efecto altura realista        [ ]
-        o salto de jugador (Doom, etc.) [ ]
+        o leer imagenes     [x]
+        o cargar mapa desde una imagen  [x]
+        o texturas para los muros (img) [x]
+        o cargar diferentes muros       [x]
     
     estado:
-        > en proceso...
+        > terminado!
 */
 
-// global class variables
+// global object variables
 var imageLoader;
 
 var objMap;
 var objPlayer;
 var objRender;
+
 
 function preload() {
     initCustomConst();
@@ -40,6 +37,8 @@ function preload() {
 
 function setup() {
     initSliders();
+    reloadFPS();
+    
 
     imageLoader.loadImagesPixels();
     imageLoader.distributeImages();
@@ -51,21 +50,29 @@ function setup() {
     createCanvas(VIEWPORT_WIDTH, VIEWPORT_HEIGHT);
     //createCanvas(cMAP_SCALING * objMap.width * TILE_SIZE, cMAP_SCALING * (objMap.height + 2) * TILE_SIZE);
 
+    objRender.setFloor();
+    objRender.setCeiling();
+
     objMap.render();
 }
 
 function update() {
     objPlayer.update();
     objRender.update();
+    
+    countFPS();
 }
 
 function draw() {
-    clear("#212121");
-    fill("#565656");
+    clear();
     
     update();
     
+    objRender.renderCeiling();
+    objRender.renderFloor();
     objRender.loadProjection();
     objMap.render();
     objPlayer.render();
+    
+    drawFPS();
 }

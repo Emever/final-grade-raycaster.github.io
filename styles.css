@@ -10,9 +10,22 @@ canvas {
     border-style: solid;
     border-width: 1px;
     border-color: #fff;
-    background-color: #212121;
+    /*background: linear-gradient(#808080, black, #303030);*/
 }
 
 .level-map-image-grid {
     display: none;
+}
+
+#helpControls {
+    right: 30px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+}
+
+#helpControls p {
+    padding: 0;
+    margin: .2rem;
+    color: white;
 }
